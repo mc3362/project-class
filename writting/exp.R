@@ -1,3 +1,0 @@
-"this is how we setup git hub"
-
-ls()
