@@ -2,8 +2,7 @@
 title: "homework 5"
 author: "Maelle Coupannec"
 date: "17/11/2021"
-output:
-  pdf_document: default
+output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
@@ -21,13 +20,14 @@ library(tigris)
 library(viridis)
 library(sf)
 library(ggthemes)
+library(tinytex)
 
 
 ```
 
 # Reading And Cleaning The Data
 
-First we read the data file which is in the data sub directory of the project file. Using `r fct_lump()` we only keep the three races with the highest number of homicides for that city, the rest are assigned to others and are filtered out. Finally, the disposition factor are reassigned to solved or unsolved for uniformity. 
+First we read the data file which is in the data sub directory of the project file. Using fct_lump() we only keep the three races with the highest number of homicides for that city, the rest are assigned to others and are filtered out. Finally, the disposition factor are reassigned to solved or unsolved for uniformity. 
  
 
 ```{r}
