@@ -28,7 +28,14 @@ homicides <- read_csv("../data/homicide-data.csv")
 homicides <- homicides %>%
   unite(col = city_name, c(city, state), sep=", ") %>%
   filter(city_name=="Las Vegas, NV") %>% 
-  mutate(victim_race= fct_lump(victim_race, n=3))
+  mutate(victim_race= fct_lump(victim_race, n=3)) %>% 
+  filter(!is.na(lon)|!is.na(lon)) %>% 
+  filter(victim_race!="Other") %>%
+  mutate(disposition=fct_recode(disposition,
+                                solved = "Closed by arrest",
+                                unsolved = "Closed without arrest", 
+                                unsolved ="Open/No arrest"))
+  
 
 head(homicides)
 ```
@@ -37,7 +44,7 @@ We filtered the data frame to keep only the homicides in Las Vegas.
 
 
 ```{r}
-map_lv <- tracts( state="NV", county = "Clark county", 
+map_lv <- block_groups( state="NV", county = "Clark county", 
                   year = NULL, class="sf")
 
 
@@ -48,5 +55,16 @@ ggplot()+
                 shape = disposition, 
                 color = victim_race), size = 0.4) 
 
+```
+
+
+```{r}
+ggplot()+
+  geom_sf(data = map_lv)+
+  geom_point(data = homicides, 
+             aes(x = lon, y = lat, 
+                shape = disposition, 
+                color = victim_race), size = 0.8)+
+  xlim(c(-115.4, -114.8)) + ylim(c(35.9, 36.4))
 ```
 
