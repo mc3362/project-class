@@ -23,6 +23,12 @@ library(ggthemes)
 
 
 ```
+
+# Reading And Cleaning The Data
+
+First we read the data file which is in the data sub directory of the project file. Using `r fct_lump()` we only keep the three races with the highest number of homicides for that city, the rest are assigned to others and are filtered out. Finally, the disposition factor are reassigned to solved or unsolved for uniformity. 
+ 
+
 ```{r}
 homicides <- read_csv("../data/homicide-data.csv")
 
@@ -41,7 +47,9 @@ homicides <- homicides %>%
 head(homicides)
 ```
 
-We filtered the data frame to keep only the homicides in Las Vegas.
+# Creation Of The Map
+
+The map SF shape is downloaded from the Tigris package, it was chosen to upload the block contour of Clark county as boundaries for Las vegas geography. Points showing homicides were added on the map. Different facets for solved versus unsolved homicides and different colors to show the three race groups were used.
 
 
 ```{r}
@@ -62,9 +70,11 @@ ggplot()+
        color= "race of the victim")
 
 ```
+# Second Map Sowing only the city area
 
+Since the first map shown the whole county and points where on top of each other, the geographic coordinate were restricted to the city area. 
 
-```{r}
+```{r, fig.height=20, fig.width=10}
 ggplot()+
   geom_sf(data = map_lv, color = "pink", 
           alpha = 0.1, size = 0.1)+
