@@ -50,12 +50,16 @@ map_lv <- block_groups( state="NV", county = "Clark county",
 
 
 ggplot()+
-  geom_sf(data = map_lv, color = "pink", 
-          alpha = 0.1, size = 0.1) )+
+  geom_sf(data = map_lv, color = "black", 
+          alpha = 0.1, size = 0.1)+
   geom_point(data = homicides, 
              aes(x = lon, y = lat, 
                 shape = disposition, 
-                color = victim_race), size = 0.4) 
+                color = victim_race), size = 0.8) +
+  ggtitle("Homicides in Las Vegas, Nevada",
+          subtitle = "Solved and unsolved casses by race")+
+  labs(x = "", y = "", shape= "case status", 
+       color= "race of the victim")
 
 ```
 
