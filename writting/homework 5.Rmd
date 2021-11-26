@@ -15,8 +15,7 @@ We are loading some library to clean the data and create the map.
 
 ```{r load library}
 library(tidyverse)
-library(purrr)
-library( broom)
+library(forcats)
 library(tigris)
 library(viridis)
 library(sf)
@@ -28,7 +27,8 @@ homicides <- read_csv("../data/homicide-data.csv")
 
 homicides <- homicides %>%
   unite(col = city_name, c(city, state), sep=", ") %>%
-  filter(city_name=="Las Vegas, NV")
+  filter(city_name=="Las Vegas, NV") %>% 
+  mutate(victim_race= fct_lump(victim_race, n=3))
 
 head(homicides)
 ```
@@ -41,9 +41,12 @@ map_lv <- tracts( state="NV", county = "Clark county",
                   year = NULL, class="sf")
 
 
-ggplot(data = map_lv)+
-  geom_sf()
-  
+ggplot()+
+  geom_sf(data = map_lv)+
+  geom_point(data = homicides, 
+             aes(x = lon, y = lat, 
+                shape = disposition, 
+                color = victim_race), size = 0.4) 
 
 ```
 
