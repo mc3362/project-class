@@ -9,17 +9,17 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
+## LOADING LIBRARY
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+We are loading some library to clean the data and create the map.
 
 ```{r load library}
 library(tidyverse)
 library(purrr)
 library( broom)
 library(tigris)
+library(viridis)
+library(sf)
 
 
 ```
@@ -28,6 +28,22 @@ homicides <- read_csv("../data/homicide-data.csv")
 
 homicides <- homicides %>%
   unite(col = city_name, c(city, state), sep=", ") %>%
-  filter(city_name=="San Francisco, CA")
+  filter(city_name=="Las Vegas, NV")
+
+head(homicides)
+```
+
+We filtered the data frame to keep only the homicides in Las Vegas.
+
+
+```{r}
+map_lv <- tracts( state="NV", county = "Clark county", 
+                  year = NULL, class="sf")
+
+
+ggplot(data = map_lv)+
+  geom_sf()
+  
+
 ```
 
