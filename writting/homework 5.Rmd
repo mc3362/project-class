@@ -19,6 +19,7 @@ library(forcats)
 library(tigris)
 library(viridis)
 library(sf)
+library(ggthemes)
 
 
 ```
@@ -49,7 +50,8 @@ map_lv <- block_groups( state="NV", county = "Clark county",
 
 
 ggplot()+
-  geom_sf(data = map_lv)+
+  geom_sf(data = map_lv, color = "pink", 
+          alpha = 0.1, size = 0.1) )+
   geom_point(data = homicides, 
              aes(x = lon, y = lat, 
                 shape = disposition, 
@@ -60,11 +62,18 @@ ggplot()+
 
 ```{r}
 ggplot()+
-  geom_sf(data = map_lv)+
+  geom_sf(data = map_lv, color = "pink", 
+          alpha = 0.1, size = 0.1)+
   geom_point(data = homicides, 
              aes(x = lon, y = lat, 
                 shape = disposition, 
                 color = victim_race), size = 0.8)+
-  xlim(c(-115.4, -114.8)) + ylim(c(35.9, 36.4))
+  xlim(c(-115.4, -114.8)) + ylim(c(35.9, 36.4))+
+  ggtitle("Homicides in Las Vegas, Nevada",
+          subtitle = "Solved and unsolved casses by race")+
+  theme_few() + 
+  labs(x = "", y = "", shape= "case status", 
+       color= "race of the victim")
+  
 ```
 
