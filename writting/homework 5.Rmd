@@ -75,9 +75,9 @@ ggplot()+
 
 Since the first map shown the whole county and points where on top of each other, the geographic coordinate were restricted to the city area. 
 
-```{r, fig.height=20, fig.width=10}
+```{r}
 ggplot()+
-  geom_sf(data = map_lv, color = "pink", 
+  geom_sf(data = map_lv, color = "grey", 
           alpha = 0.1, size = 0.1)+
   geom_point(data = homicides, 
              aes(x = lon, y = lat, 
